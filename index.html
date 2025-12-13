@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bar Graph | CFB Analytics</title>
+  <meta name="description" content="CFB analytics without the agenda. Computer rankings, historical context, and data-driven analysis by Greg Harmon.">
+  <meta property="og:title" content="Bar Graph | CFB Analytics">
+  <meta property="og:description" content="CFB analytics without the agenda. I just run the numbers.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bar Graph | CFB Analytics">
+  <meta name="twitter:description" content="CFB analytics without the agenda. I just run the numbers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      flex: 1;
+    }
+
+    .logo {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .logo-bar {
+      width: 8px;
+      background: #f5c542;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .logo-bar:nth-child(1) { height: 24px; }
+    .logo-bar:nth-child(2) { height: 40px; }
+    .logo-bar:nth-child(3) { height: 32px; }
+    .logo-bar:nth-child(4) { height: 48px; }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 32px;
+    }
+
+    .byline {
+      font-size: 15px;
+      color: #64748b;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .byline a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+
+    .byline a:hover {
+      color: #f5c542;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .featured-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s ease;
+      border: 1px solid #334155;
+    }
+
+    .featured-card:hover {
+      background: #263549;
+      border-color: #475569;
+      transform: translateY(-2px);
+    }
+
+    .featured-card h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .featured-card p {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .featured-card .meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .featured-card .tag {
+      background: #0c4a6e;
+      color: #7dd3fc;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .featured-card .tag.featured {
+      background: #713f12;
+      color: #fcd34d;
+    }
+
+    .stat-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #14532d;
+      color: #86efac;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .subscribe-section {
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .subscribe-section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .subscribe-section p {
+      font-size: 15px;
+      color: #94a3b8;
+      margin-bottom: 20px;
+    }
+
+    .subscribe-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5c542;
+      color: #0f172a;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .subscribe-btn:hover {
+      background: #fcd34d;
+      transform: translateY(-1px);
+    }
+
+    .social-links {
+      margin-top: 24px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-links a {
+      color: #64748b;
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .social-links a:hover {
+      color: #f5c542;
+    }
+
+    footer {
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #475569;
+      border-top: 1px solid #1e293b;
+    }
+
+    .shamrock {
+      color: #22c55e;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 40px 20px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .featured-card {
+        padding: 20px;
+      }
+
+      .featured-card h2 {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <div class="logo-bar"></div>
+      <div class="logo-bar"></div>
+      <div class="logo-bar"></div>
+      <div class="logo-bar"></div>
+    </div>
+    <h1>Bar Graph</h1>
+    <p class="tagline">CFB analytics without the agenda. I just run the numbers.</p>
+    <p class="byline">By Greg Harmon <span class="shamrock">☘️</span> ND '09 · <a href="https://twitter.com/BarGraphCFB">@BarGraphCFB</a></p>
+
+    <p class="section-label">Latest Analysis</p>
+
+    <a href="/notre-dame-2025.html" class="featured-card">
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <span class="tag featured">Featured</span>
+        <span class="tag">Interactive</span>
+      </div>
+      <h2>Notre Dame Deserved to Be In</h2>
+      <p>The process debate matters. But don't let it obscure how good this team actually was. I analyzed 194,480 ranking scenarios across four different philosophies. The result? There's no math that justifies the committee's decision.</p>
+      <div class="meta">
+        <span>December 2025</span>
+        <span>·</span>
+        <span>15 min read</span>
+        <span>·</span>
+        <span class="stat-highlight">100% of scenarios: ND top 3</span>
+      </div>
+    </a>
+
+    <div class="subscribe-section">
+      <h3>Get future analysis in your inbox</h3>
+      <p>Computer rankings, historical context, and data-driven CFB analysis. No spam, no hot takes—just the numbers.</p>
+      <a href="https://bargraphcfb.substack.com" class="subscribe-btn">
+        Subscribe on Substack
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+      <div class="social-links">
+        <a href="https://twitter.com/BarGraphCFB">Twitter/X</a>
+        <a href="https://bargraphcfb.substack.com">Substack</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Bar Graph · Built with data and mild resentment
+  </footer>
+</body>
+</html>

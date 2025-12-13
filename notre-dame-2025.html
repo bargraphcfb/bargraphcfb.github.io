@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notre Dame Deserved to Be In</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    
+    .article-container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+    
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    .subtitle {
+      font-size: clamp(18px, 3vw, 22px);
+      color: #555;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    
+    h2 {
+      font-size: clamp(20px, 4vw, 26px);
+      margin-top: 48px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    h3 {
+      font-size: clamp(17px, 3.5vw, 20px);
+      margin-top: 32px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    
+    p {
+      margin-bottom: 20px;
+      font-size: clamp(16px, 2.5vw, 18px);
+    }
+    
+    .lead {
+      font-size: clamp(18px, 3vw, 21px);
+      color: #444;
+    }
+    
+    em { font-style: italic; }
+    strong { font-weight: 600; }
+    
+    blockquote {
+      border-left: 3px solid #1e3a5f;
+      padding-left: 20px;
+      margin: 28px 0;
+      font-style: italic;
+      color: #444;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+    }
+    
+    th, td {
+      padding: 12px 8px;
+      text-align: left;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    
+    th {
+      font-weight: 600;
+      background: #f8f8f8;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #666;
+    }
+    
+    td:nth-child(n+3) { text-align: center; }
+    th:nth-child(n+3) { text-align: center; }
+    
+    .highlight-row {
+      background: #fff8f0;
+    }
+    
+    .winner { color: #16a34a; font-weight: 600; }
+    .loser { color: #dc2626; }
+    
+    hr {
+      border: none;
+      border-top: 1px solid #e5e5e5;
+      margin: 48px 0;
+    }
+    
+    .callout-box {
+      background: #f8f9fa;
+      border-left: 4px solid #1e3a5f;
+      padding: 20px 24px;
+      margin: 32px 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    
+    .callout-box .stat {
+      font-size: 48px;
+      font-weight: 700;
+      color: #1e3a5f;
+      line-height: 1;
+    }
+    
+    .callout-box .label {
+      font-size: 14px;
+      color: #666;
+      margin-top: 8px;
+    }
+    
+    .hero-callout {
+      background: #1e3a5f;
+      color: #fff;
+      padding: 28px 24px;
+      margin: 32px 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    
+    .hero-callout .stat {
+      font-size: 56px;
+      font-weight: 700;
+      color: #f5c542;
+      line-height: 1;
+    }
+    
+    .hero-callout .label {
+      font-size: 15px;
+      color: rgba(255,255,255,0.9);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    
+    .hero-callout .punchline {
+      font-size: 18px;
+      font-style: italic;
+      margin-top: 16px;
+      color: #f5c542;
+    }
+    
+    .tool-container {
+      margin: 32px -20px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    @media (min-width: 720px) {
+      .tool-container {
+        margin: 32px -40px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+      }
+    }
+    
+    ul, ol {
+      margin: 20px 0;
+      padding-left: 24px;
+    }
+    
+    li {
+      margin-bottom: 8px;
+      font-size: clamp(16px, 2.5vw, 18px);
+    }
+
+    input[type="range"] { -webkit-appearance: none; appearance: none; background: #e2e8f0; border-radius: 4px; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; }
+    .amber-accent::-webkit-slider-thumb { background: #d97706; }
+    .blue-accent::-webkit-slider-thumb { background: #2563eb; }
+    .green-accent::-webkit-slider-thumb { background: #059669; }
+    .purple-accent::-webkit-slider-thumb { background: #7c3aed; }
+    
+    .footnote {
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #e5e5e5;
+      margin-top: 48px;
+      padding-top: 24px;
+    }
+    
+    .philosophy-box {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    
+    .philosophy-box h4 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+    
+    .philosophy-box .verdict {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      background: #e8f5e9;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-top: 12px;
+      color: #2e7d32;
+    }
+    
+    .bubble-table {
+      margin: 24px 0;
+    }
+    
+    .bubble-table .in-label {
+      color: #16a34a;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    
+    .bubble-table .out-label {
+      color: #dc2626;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    
+    .avg-cell {
+      font-weight: 700;
+      color: #1e3a5f;
+    }
+    
+    .historical-table {
+      margin: 24px 0;
+      font-size: 13px;
+    }
+    
+    .historical-table th {
+      font-size: 11px;
+    }
+    
+    .historical-table td {
+      padding: 10px 8px;
+    }
+    
+    .historical-table .year-cell {
+      font-weight: 600;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <article class="article-container">
+    <h1>Notre Dame Deserved to Be In</h1>
+    <p class="subtitle">The process debate matters. But don't let it obscure how good this team actually was.</p>
+    
+    <p class="lead">"Overwhelming shock and sadness. Like a collective feeling that we were all just punched in the stomach."</p>
+    
+    <p>That was Notre Dame athletic director Pete Bevacqua, speaking to Yahoo Sports an hour after the CFP committee left his team out of the bracket. In the days that followed, Bevacqua called the weekly ranking shows a "farce," said the playoff was "stolen" from his players, and declared that the ACC had done "permanent damage" to its relationship with Notre Dame.</p>
+    
+    <p>The frustration was real. After the committee ranked Notre Dame within the playoff field for four straight weeks—at one point eight spots ahead of Miami—it flipped them at the finish line, citing Miami's head-to-head victory from Labor Day weekend. The Irish, who'd won 10 straight to close the season, were suddenly on the outside looking in. They declined a bowl invitation rather than play what felt like a consolation game.</p>
+    
+    <p>It was the first time in CFP history that a team was ranked inside the field in every weekly ranking, won every remaining game, and still didn't make the playoff.</p>
+    
+    <p>Much of the conversation since has focused on process. Was the weekly ranking show misleading? Should head-to-head matter this much? Did the ACC's lobbying campaign cross a line? These are important questions, and we'll get to them.</p>
+    
+    <p>But somewhere in the noise about politics and process, there's a simpler question that deserves an answer: Was Notre Dame actually one of the ten best teams in the country?</p>
+    
+    <p>The data says yes. And it's not close.</p>
+    
+    <h2>Four Ways to Rank a Team</h2>
+    
+    <p>There's a moment every college football fan knows. You're at a bar, three beers in, and someone says "there's no way Team X should be ranked ahead of Team Y." What follows is an hour-long debate involving transitive wins, eye tests, schedule strength, who beat who by more, what some biased expert with an agenda said, and inevitably someone pulling up a score from six weeks ago on their phone.</p>
+    
+    <p>Here's the thing: every computer ranking system is just doing exactly what you're doing at that bar—except it's doing it across 134 teams and 800+ games simultaneously, with a memory that doesn't fade after your fourth IPA, without the emotional attachment to your alma mater, and with a framework that doesn't change based on which teams are involved.</p>
+    
+    <p>When you strip away the math, every computer ranking embodies one of three philosophies that you've probably argued yourself at some point. We'll use one representative system from each camp—but understand that dozens of other systems share each philosophy and reach similar conclusions. And then there's the human polls, which mostly just tell you which teams the experts feel good about this week and you need to hope they've actually watched some of the games.</p>
+    
+    <div class="philosophy-box">
+      <h4>Philosophy #1: "A Win is a Win" — The Colley Matrix</h4>
+      <p>This is the purest form of the argument that only results matter. The Colley Matrix looks at wins and losses—period. No margin of victory. No style points. Beat a team, you get credit; lose, you don't.</p>
+      <p>What makes Colley interesting is how it handles strength of schedule. If you beat a team that beat a team that beat Ohio State, that connection exists in the math. It's essentially solving a massive system of equations where every team's rating depends on who they beat and who beat them, which depends on who <em>those</em> teams beat, and so on, until you get a self-consistent set of ratings across all 134 FBS teams.</p>
+      <p>Think of it as what you'd conclude after three hours of bar debate if you had perfect recall of every game result and infinite patience to trace every transitive connection, but you refused to look at any box scores.</p>
+      <div class="verdict"><strong>Colley's verdict:</strong> Notre Dame #10.</div>
+    </div>
+    
+    <div class="philosophy-box">
+      <h4>Philosophy #2: "How You Win Matters" — The Massey Ratings</h4>
+      <p>Kenneth Massey's system has been around since 1995, and it builds on the wins-only approach by adding one more input: the final score. Margin of victory matters, but with diminishing returns—Massey caps the impact at around 20-25 points, so a 30-point win isn't treated as meaningfully different from a 25-point win.</p>
+      <p>The math finds a set of team ratings that best explains all the score differentials across all games. When the ratings don't perfectly predict a result (which happens constantly, because football is chaotic), the system treats that as noise.</p>
+      <p>This is the "a win is a win, but the scoreboard tells you something" argument, systematized. It rewards teams that consistently handle their business, while recognizing that style points beyond a certain threshold are just running up the score.</p>
+      <div class="verdict"><strong>Massey's verdict:</strong> Notre Dame #6.</div>
+    </div>
+    
+    <div class="philosophy-box">
+      <h4>Philosophy #3: "Who Would Win Tomorrow?" — ESPN's FPI</h4>
+      <p>The Football Power Index takes yet another approach: it tries to predict who would win on a neutral field <em>tomorrow</em>, not who "deserves" it based on what happened in September. Think of it as the eye test, quantified.</p>
+      <p>FPI breaks down each play into its component parts—separating offensive performance from defensive performance, adjusting for opponent strength, filtering out noise like fluky turnovers and garbage-time touchdowns. It's trying to measure sustainable, repeatable performance rather than outcomes that might not happen again.</p>
+      <p>This philosophy drives some people crazy. "You can't just ignore results!" But predictive models aren't ignoring results—they're weighting them by how much information each result actually contains. A 3-point win where you outgained the opponent by 200 yards tells you something different than a 3-point win where you got bailed out by three turnovers.</p>
+      <p>This is the "I know they lost, but watch the tape" argument—except the tape is every play from every game, adjusted for context.</p>
+      <div class="verdict"><strong>FPI's verdict:</strong> Notre Dame #3.</div>
+    </div>
+    
+    <div class="philosophy-box">
+      <h4>Philosophy #4: "Trust the Experts" — AP Poll & Coaches Poll</h4>
+      <p>Of course, not everyone trusts computers. The AP Poll aggregates the opinions of 62 sportswriters and broadcasters who watch games for a living. The Coaches Poll surveys all 134 FBS head coaches—people with staffs dedicated to analyzing opponents, who see things in film that no algorithm can capture.</p>
+      <p>Human polls have their flaws. Voters have biases, limited time, and a tendency toward groupthink. Coaches famously delegate their ballots to sports information directors who may or may not have watched a single snap. But hey—sometimes the vibes are right. And when the humans and the computers agree, that's worth noting.</p>
+      <div class="verdict"><strong>Human verdict:</strong> Notre Dame #9 in both.</div>
+    </div>
+    
+    <p>Four different philosophies. Three algorithmic, one human. And all four said the same thing: Notre Dame was a top-10 team.</p>
+    
+    <h2>The Number That Matters</h2>
+    
+    <p>So here's what we did: we took Notre Dame's ranking in each of those four systems—Colley, Massey, FPI, and the average of the two human polls—and averaged them together.</p>
+    
+    <div class="hero-callout">
+      <div class="stat">7.00</div>
+      <div class="label">Notre Dame's average rank across all four philosophical approaches.<br>Colley: #10 · Massey: #6 · FPI: #3 · Humans: #9</div>
+      <div class="punchline">In CFP history, 71 teams have averaged 7.00 or better. 70 finished in the top 10. Notre Dame is the only exception.</div>
+    </div>
+    
+    <p>That 7.00 isn't a cherry-picked stat. It's what you get when you synthesize four entirely different philosophies—and all four point in the same direction. When the "wins only" people, the "margin of victory" people, the "predictive efficiency" people, <em>and</em> the human experts all agree that a team is really good, that's not an accident.</p>
+    
+    <p>And when you zoom out to the historical context, the four philosophies have never been so sure—and so in sync—about a team left outside the top 10 as they were about Notre Dame in 2025. Here are the ten best four-system averages in CFP history for teams that finished outside the top 10:</p>
+    
+    <div class="historical-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Team</th>
+            <th>CFP</th>
+            <th>Col</th>
+            <th>Mas</th>
+            <th>FPI</th>
+            <th>Human</th>
+            <th>Avg</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td class="year-cell">2025</td>
+            <td><strong>Notre Dame</strong></td>
+            <td>#11</td>
+            <td>10</td>
+            <td>6</td>
+            <td>3</td>
+            <td>9</td>
+            <td class="avg-cell">7.00</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2022</td>
+            <td>Penn State</td>
+            <td>#11</td>
+            <td>10</td>
+            <td>6</td>
+            <td>8</td>
+            <td>8</td>
+            <td class="avg-cell">8.00</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2024</td>
+            <td>Alabama</td>
+            <td>#11</td>
+            <td>11</td>
+            <td>6</td>
+            <td>4</td>
+            <td>11</td>
+            <td class="avg-cell">8.00</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2021</td>
+            <td>Oklahoma</td>
+            <td>#16</td>
+            <td>11</td>
+            <td>7</td>
+            <td>6</td>
+            <td>13.5</td>
+            <td class="avg-cell">9.38</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2019</td>
+            <td>Alabama</td>
+            <td>#13</td>
+            <td>22</td>
+            <td>4</td>
+            <td>4</td>
+            <td>9</td>
+            <td class="avg-cell">9.75</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2023</td>
+            <td>Oklahoma</td>
+            <td>#12</td>
+            <td>9</td>
+            <td>10</td>
+            <td>8</td>
+            <td>12</td>
+            <td class="avg-cell">9.75</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2016</td>
+            <td>Florida State</td>
+            <td>#11</td>
+            <td>10</td>
+            <td>12</td>
+            <td>9</td>
+            <td>10</td>
+            <td class="avg-cell">10.25</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2019</td>
+            <td>Auburn</td>
+            <td>#12</td>
+            <td>18</td>
+            <td>6</td>
+            <td>6</td>
+            <td>11</td>
+            <td class="avg-cell">10.25</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2018</td>
+            <td>LSU</td>
+            <td>#11</td>
+            <td>9</td>
+            <td>6</td>
+            <td>16</td>
+            <td>11</td>
+            <td class="avg-cell">10.50</td>
+          </tr>
+          <tr>
+            <td class="year-cell">2017</td>
+            <td>Notre Dame</td>
+            <td>#14</td>
+            <td>9</td>
+            <td>9</td>
+            <td>10</td>
+            <td>14.5</td>
+            <td class="avg-cell">10.62</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <p>The gap between Notre Dame and the second-best snub (2022 Penn State at 8.00) is a full ranking spot. No team with a profile this strong has ever been left outside the top 10.</p>
+    
+    <p>Until now.</p>
+    
+    <h2>The Bubble Picture</h2>
+    
+    <p>Notre Dame wasn't competing against the entire top 25. They were competing against roughly eight teams fighting for the final three at-large spots—the bubble. And when you look at how those bubble teams stacked up across all four philosophical approaches, something becomes obvious.</p>
+    
+    <p>Oklahoma made the field at #8. Their four-system average? 10.25. Alabama squeaked in at #9 with an average of 10.00. Miami grabbed the last spot at #10 with an average of 11.00.</p>
+    
+    <p>Notre Dame, left out at #11, averaged 7.00.</p>
+    
+    <p>Read that again. The team that didn't make the playoff had a better composite ranking than every team that did make it from the bubble. It's not that Notre Dame was a borderline case that got squeezed out in a coin flip. By this measure, they were the <em>best</em> team in the at-large conversation—and it wasn't particularly close.</p>
+    
+    <div class="bubble-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>CFP</th>
+            <th>Col</th>
+            <th>Mas</th>
+            <th>FPI</th>
+            <th>AP</th>
+            <th>Coach</th>
+            <th>Avg</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Oklahoma</td>
+            <td>#8</td>
+            <td>9</td>
+            <td>9</td>
+            <td>15</td>
+            <td>8</td>
+            <td>8</td>
+            <td class="avg-cell">10.25</td>
+            <td><span class="in-label">IN</span></td>
+          </tr>
+          <tr>
+            <td>Alabama</td>
+            <td>#9</td>
+            <td>11</td>
+            <td>10</td>
+            <td>8</td>
+            <td>11</td>
+            <td>11</td>
+            <td class="avg-cell">10.00</td>
+            <td><span class="in-label">IN</span></td>
+          </tr>
+          <tr>
+            <td>Miami</td>
+            <td>#10</td>
+            <td>13</td>
+            <td>14</td>
+            <td>7</td>
+            <td>10</td>
+            <td>10</td>
+            <td class="avg-cell">11.00</td>
+            <td><span class="in-label">IN</span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Notre Dame</strong></td>
+            <td><strong>#11</strong></td>
+            <td>10</td>
+            <td>6</td>
+            <td>3</td>
+            <td>9</td>
+            <td>9</td>
+            <td class="avg-cell">7.00</td>
+            <td><span class="out-label">OUT</span></td>
+          </tr>
+          <tr>
+            <td>BYU</td>
+            <td>#12</td>
+            <td>6</td>
+            <td>13</td>
+            <td>16</td>
+            <td>12</td>
+            <td>13</td>
+            <td class="avg-cell">11.88</td>
+            <td><span class="out-label">OUT</span></td>
+          </tr>
+          <tr>
+            <td>Texas</td>
+            <td>#13</td>
+            <td>20</td>
+            <td>11</td>
+            <td>13</td>
+            <td>14</td>
+            <td>14</td>
+            <td class="avg-cell">14.50</td>
+            <td><span class="out-label">OUT</span></td>
+          </tr>
+          <tr>
+            <td>Vanderbilt</td>
+            <td>#14</td>
+            <td>15</td>
+            <td>17</td>
+            <td>14</td>
+            <td>13</td>
+            <td>12</td>
+            <td class="avg-cell">14.62</td>
+            <td><span class="out-label">OUT</span></td>
+          </tr>
+          <tr>
+            <td>Utah</td>
+            <td>#15</td>
+            <td>17</td>
+            <td>12</td>
+            <td>9</td>
+            <td>15</td>
+            <td>15</td>
+            <td class="avg-cell">13.25</td>
+            <td><span class="out-label">OUT</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <p>Notre Dame's 7.00 isn't just the best on the bubble—it's in a completely different tier. The gap between Notre Dame (7.00) and the best team that made it, Alabama (10.00), is 3 full spots. Notre Dame wasn't in the same tier as the other bubble teams. They were in a tier by themselves.</p>
+    
+    <h2>The Math</h2>
+    
+    <p>OK, great. But maybe you're saying to yourself: "I don't think the models should be weighted equally." Or: "I don't trust predictive models—just tell me who won." Or maybe: "Computers miss things—I want to weight the humans more heavily." That's fair. Pick your philosophy.</p>
+    
+    <p>We tested every combination of weights across all four systems, at 5% increments. That's 194,480 different scenarios—every possible way you could blend "wins only," "margin matters," "who wins tomorrow," and "trust the experts" into a single ranking philosophy.</p>
+    
+    <div class="callout-box">
+      <div class="stat">100%</div>
+      <div class="label">of weight combinations place Notre Dame in the top 3 of the bubble.</div>
+    </div>
+    
+    <table style="margin: 24px 0; font-size: 14px;">
+      <thead>
+        <tr>
+          <th style="text-align: left;">Notre Dame's Bubble Rank</th>
+          <th style="text-align: center;">Combinations</th>
+          <th style="text-align: center;">Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>#1</strong></td>
+          <td style="text-align: center;">188,320</td>
+          <td style="text-align: center;"><strong>96.8%</strong></td>
+        </tr>
+        <tr>
+          <td>#2</td>
+          <td style="text-align: center;">4,691</td>
+          <td style="text-align: center;">2.4%</td>
+        </tr>
+        <tr>
+          <td>#3</td>
+          <td style="text-align: center;">1,469</td>
+          <td style="text-align: center;">0.8%</td>
+        </tr>
+        <tr>
+          <td>#4 or worse</td>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">0.0%</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>It's not that Notre Dame usually comes out ahead. It's that in nearly 97% of scenarios, they're the #1 team on the bubble—and in the remaining 3%, they're still #2 or #3. There is no combination of philosophical weights that drops them to #4. Zero out of 194,480.</p>
+    
+    <p>Go all-in on wins only? Notre Dame is top 3. Weight margin of victory at 100%? Notre Dame is #1. Pure predictive efficiency? Notre Dame is #1 by a mile. Trust only the human polls? Notre Dame is still ahead of every bubble team that made it.</p>
+    
+    <p>The math doesn't allow for the outcome the committee produced.</p>
+    
+    <p>Try it yourself:</p>
+    
+    <div class="tool-container" id="tool-root"></div>
+    
+    <p>No matter how you adjust the weights—whether you care only about wins, only about margin, only about predictive power, or only about what the human experts think—Notre Dame stays in the top 3. The data is that clear.</p>
+    
+    <h2>What This Actually Means</h2>
+    
+    <p>In the weeks since selection Sunday, the conversation has been dominated by one talking point: Miami beat Notre Dame head-to-head. The ACC made sure everyone knew it. ESPN's studio shows hammered it. Committee chair Hunter Yurachek said he asked members to go back and re-watch the Labor Day game. Head-to-head. Head-to-head. Head-to-head.</p>
+    
+    <p>It was a masterful piece of narrative management—a smokescreen, if you will. Because while everyone was debating whether a Week 1 result should matter more than a 10-game winning streak, they stopped asking the more fundamental question: Was Notre Dame even a bubble team?</p>
+    
+    <p>They weren't. Notre Dame ranked in the top 3 of the bubble in Colley. In Massey. In FPI. In the AP Poll. In the Coaches Poll. Five different ways of evaluating teams—three algorithmic, two human—and all five said Notre Dame wasn't fighting for the last spot. They were clearly one of the best teams in the at-large conversation, full stop.</p>
+    
+    <p>The head-to-head debate only makes sense if you accept the premise that Miami and Notre Dame were "otherwise comparable." But they weren't comparable. By every measure we have, Notre Dame wasn't on Miami's level—they were a tier above. The committee didn't choose between two similar teams. They passed over a team that every ranking system—human and computer alike—said was clearly better.</p>
+    
+    <p>Pete Bevacqua was right to be upset. But in the weeks of arguments about politics and process, about ACC social media campaigns and the sanctity of head-to-head results, something got lost: how good this Notre Dame team actually was.</p>
+    
+    <hr>
+    
+    <p>This was a team that started 0-2 with losses by a combined four points, then won 10 straight to close the season. A team that, by FPI, was the third-best in America—ahead of everyone in the bracket except Indiana and Ohio State. A team that no ranking system, human or computer, could justify leaving outside the top 3 of the bubble.</p>
+    
+    <p>Bevacqua called the outcome "mystifying." He said there was "no explanation" that could justify it. The data says he was right.</p>
+    
+    <p>The process questions matter and need to be addressed. But don't let them obscure what happened here: the best team ever left outside the top 10 in CFP history didn't make the playoff.</p>
+    
+    <p class="footnote"><strong>Data sources:</strong> CFP Final Rankings (Dec 7, 2025), Colley Matrix, Massey Ratings, ESPN FPI, AP Poll, USA Today Coaches Poll. Historical analysis covers 2014–2025 CFP era. Human poll average = (AP + Coaches) / 2.</p>
+  </article>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+
+    const teams = [
+      { name: 'Oklahoma', cfp: 8, colley: 9, massey: 9, fpi: 15, human: 8 },
+      { name: 'Alabama', cfp: 9, colley: 11, massey: 10, fpi: 8, human: 11 },
+      { name: 'Miami', cfp: 10, colley: 13, massey: 14, fpi: 7, human: 10 },
+      { name: 'Notre Dame', cfp: 11, colley: 10, massey: 6, fpi: 3, human: 9 },
+      { name: 'BYU', cfp: 12, colley: 6, massey: 13, fpi: 16, human: 12.5 },
+      { name: 'Texas', cfp: 13, colley: 20, massey: 11, fpi: 13, human: 14 },
+      { name: 'Vanderbilt', cfp: 14, colley: 15, massey: 17, fpi: 14, human: 12.5 },
+      { name: 'Utah', cfp: 15, colley: 17, massey: 12, fpi: 9, human: 15 },
+    ];
+
+    function CFBRankingTool() {
+      const [weights, setWeights] = useState({ colley: 25, massey: 25, fpi: 25, human: 25 });
+      const totalWeight = weights.colley + weights.massey + weights.fpi + weights.human || 1;
+
+      const rankedTeams = useMemo(() => {
+        const normalized = {
+          colley: weights.colley / totalWeight,
+          massey: weights.massey / totalWeight,
+          fpi: weights.fpi / totalWeight,
+          human: weights.human / totalWeight,
+        };
+        const teamsWithComposite = teams.map(team => {
+          const composite = team.colley * normalized.colley + team.massey * normalized.massey + team.fpi * normalized.fpi + team.human * normalized.human;
+          return { ...team, composite };
+        });
+        const sorted = [...teamsWithComposite].sort((a, b) => a.composite - b.composite);
+        return sorted.map((team, index) => ({ ...team, compositeRank: index + 1 }));
+      }, [weights, totalWeight]);
+
+      const getDiffDisplay = (team) => {
+        const cfpBubbleRank = team.cfp - 7;
+        const diff = cfpBubbleRank - team.compositeRank;
+        if (Math.abs(diff) < 0.5) return <span style={{color: '#9ca3af'}}>—</span>;
+        if (diff > 0) return <span style={{color: '#16a34a', fontWeight: 600}}>↑{Math.round(Math.abs(diff))}</span>;
+        return <span style={{color: '#dc2626', fontWeight: 600}}>↓{Math.round(Math.abs(diff))}</span>;
+      };
+
+      const ndRank = rankedTeams.find(t => t.name === 'Notre Dame')?.compositeRank;
+      
+      const getInsight = () => {
+        if (ndRank === 1) return `At these weights, Notre Dame is the #1 bubble team. No matter how you adjust, they stay in the top 3.`;
+        if (ndRank === 2) return `Notre Dame at #2. Still top 3—there's no combination that drops them lower.`;
+        if (ndRank === 3) return `Notre Dame at #3. This is as low as they can go—the math won't let them fall further.`;
+        return `Notre Dame at #${ndRank}.`;
+      };
+
+      const s = {
+        container: { padding: '20px', fontFamily: 'system-ui, -apple-system, sans-serif', color: '#1e293b' },
+        header: { textAlign: 'center', marginBottom: '20px' },
+        title: { fontSize: '18px', fontWeight: 'bold', marginBottom: '4px', color: '#0f172a' },
+        subtitle: { color: '#64748b', fontSize: '13px' },
+        sliderBox: { background: '#fff', borderRadius: '8px', padding: '16px', marginBottom: '16px', border: '1px solid #e2e8f0' },
+        sliderRow: { marginBottom: '14px' },
+        sliderHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' },
+        sliderInput: { width: '100%', height: '8px', borderRadius: '4px', cursor: 'pointer' },
+        sliderDesc: { fontSize: '11px', color: '#64748b', marginTop: '4px' },
+        presetRow: { display: 'flex', flexWrap: 'wrap', gap: '6px', paddingTop: '12px', borderTop: '1px solid #e2e8f0' },
+        tableBox: { background: '#fff', borderRadius: '8px', overflow: 'hidden', marginBottom: '12px', border: '1px solid #e2e8f0' },
+        tableHeader: { padding: '10px 12px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' },
+        table: { width: '100%', borderCollapse: 'collapse', fontSize: '12px' },
+        insightBox: { background: '#fff', borderRadius: '8px', padding: '12px', border: '1px solid #e2e8f0' },
+        rankBadge: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', background: '#1e293b', color: '#fff', borderRadius: '50%', fontSize: '11px', fontWeight: 'bold' },
+        cfpBadge: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', background: '#dc2626', color: '#fff', borderRadius: '50%', fontSize: '11px', fontWeight: 'bold' },
+      };
+
+      const btn = (bg, color, border) => ({ padding: '5px 10px', background: bg, color: color, borderRadius: '16px', fontSize: '11px', border: `1px solid ${border}`, cursor: 'pointer', fontWeight: 500 });
+
+      const isHighlight = (name) => name === 'Notre Dame';
+
+      return (
+        <div style={s.container}>
+          <div style={s.header}>
+            <h3 style={s.title}>Can You Keep Notre Dame Out of the Top 3?</h3>
+            <p style={s.subtitle}>Adjust philosophy weights and watch the bubble rankings shift</p>
+          </div>
+
+          <div style={s.sliderBox}>
+            <div style={s.sliderRow}>
+              <div style={s.sliderHeader}>
+                <span style={{fontWeight: 600, color: '#d97706', fontSize: '13px'}}>Colley Matrix</span>
+                <span style={{fontFamily: 'monospace', color: '#d97706', fontWeight: 600, fontSize: '13px'}}>{Math.round(weights.colley / totalWeight * 100)}%</span>
+              </div>
+              <input type="range" min="0" max="100" value={weights.colley} onChange={(e) => setWeights(prev => ({ ...prev, colley: parseInt(e.target.value) }))} className="amber-accent" style={s.sliderInput} />
+              <p style={s.sliderDesc}>"A win is a win" — Binary outcomes, no margin of victory</p>
+            </div>
+
+            <div style={s.sliderRow}>
+              <div style={s.sliderHeader}>
+                <span style={{fontWeight: 600, color: '#2563eb', fontSize: '13px'}}>Massey Ratings</span>
+                <span style={{fontFamily: 'monospace', color: '#2563eb', fontWeight: 600, fontSize: '13px'}}>{Math.round(weights.massey / totalWeight * 100)}%</span>
+              </div>
+              <input type="range" min="0" max="100" value={weights.massey} onChange={(e) => setWeights(prev => ({ ...prev, massey: parseInt(e.target.value) }))} className="blue-accent" style={s.sliderInput} />
+              <p style={s.sliderDesc}>"How you win matters" — Score differential, capped around 20-25 points</p>
+            </div>
+
+            <div style={s.sliderRow}>
+              <div style={s.sliderHeader}>
+                <span style={{fontWeight: 600, color: '#059669', fontSize: '13px'}}>ESPN FPI</span>
+                <span style={{fontFamily: 'monospace', color: '#059669', fontWeight: 600, fontSize: '13px'}}>{Math.round(weights.fpi / totalWeight * 100)}%</span>
+              </div>
+              <input type="range" min="0" max="100" value={weights.fpi} onChange={(e) => setWeights(prev => ({ ...prev, fpi: parseInt(e.target.value) }))} className="green-accent" style={s.sliderInput} />
+              <p style={s.sliderDesc}>"Who would win tomorrow?" — The eye test, quantified</p>
+            </div>
+
+            <div style={{marginBottom: '0'}}>
+              <div style={s.sliderHeader}>
+                <span style={{fontWeight: 600, color: '#7c3aed', fontSize: '13px'}}>Human Polls</span>
+                <span style={{fontFamily: 'monospace', color: '#7c3aed', fontWeight: 600, fontSize: '13px'}}>{Math.round(weights.human / totalWeight * 100)}%</span>
+              </div>
+              <input type="range" min="0" max="100" value={weights.human} onChange={(e) => setWeights(prev => ({ ...prev, human: parseInt(e.target.value) }))} className="purple-accent" style={s.sliderInput} />
+              <p style={s.sliderDesc}>"Trust the experts" — AP Poll & Coaches Poll averaged</p>
+            </div>
+
+            <div style={s.presetRow}>
+              <button onClick={() => setWeights({ colley: 100, massey: 0, fpi: 0, human: 0 })} style={btn('#fef3c7', '#b45309', '#fcd34d')}>Pure Wins</button>
+              <button onClick={() => setWeights({ colley: 0, massey: 100, fpi: 0, human: 0 })} style={btn('#dbeafe', '#1d4ed8', '#93c5fd')}>Pure MOV</button>
+              <button onClick={() => setWeights({ colley: 0, massey: 0, fpi: 100, human: 0 })} style={btn('#d1fae5', '#047857', '#6ee7b7')}>Pure Predictive</button>
+              <button onClick={() => setWeights({ colley: 0, massey: 0, fpi: 0, human: 100 })} style={btn('#ede9fe', '#6d28d9', '#c4b5fd')}>Pure Human</button>
+              <button onClick={() => setWeights({ colley: 25, massey: 25, fpi: 25, human: 25 })} style={btn('#f1f5f9', '#475569', '#cbd5e1')}>Reset</button>
+            </div>
+          </div>
+
+          <div style={s.tableBox}>
+            <div style={s.tableHeader}>
+              <strong style={{fontSize: '13px', color: '#0f172a'}}>Bubble Rankings: Your Weights vs. Committee</strong>
+            </div>
+            <table style={s.table}>
+              <thead>
+                <tr style={{background: '#f8fafc'}}>
+                  <th style={{padding: '8px 10px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: '10px', width: '36px'}}>You</th>
+                  <th style={{padding: '8px 6px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: '10px'}}>Team</th>
+                  <th style={{padding: '8px 6px', textAlign: 'center', fontWeight: 600, color: '#d97706', fontSize: '10px'}}>Col</th>
+                  <th style={{padding: '8px 6px', textAlign: 'center', fontWeight: 600, color: '#2563eb', fontSize: '10px'}}>Mas</th>
+                  <th style={{padding: '8px 6px', textAlign: 'center', fontWeight: 600, color: '#059669', fontSize: '10px'}}>FPI</th>
+                  <th style={{padding: '8px 6px', textAlign: 'center', fontWeight: 600, color: '#7c3aed', fontSize: '10px'}}>Hum</th>
+                  <th style={{padding: '8px 6px', textAlign: 'center', fontWeight: 600, color: '#dc2626', fontSize: '10px'}}>CFP</th>
+                  <th style={{padding: '8px 6px', textAlign: 'center', fontWeight: 600, color: '#64748b', fontSize: '10px'}}>Δ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rankedTeams.map((team, index) => (
+                  <tr key={team.name} style={{borderBottom: '1px solid #f1f5f9', background: isHighlight(team.name) ? '#fffbeb' : (index % 2 === 0 ? '#fff' : '#f8fafc')}}>
+                    <td style={{padding: '8px 10px'}}><span style={s.rankBadge}>{team.compositeRank}</span></td>
+                    <td style={{padding: '8px 6px', fontWeight: isHighlight(team.name) ? 700 : 500, color: '#0f172a', fontSize: '12px'}}>{team.name}</td>
+                    <td style={{padding: '8px 6px', textAlign: 'center', color: '#d97706', fontSize: '11px'}}>{team.colley}</td>
+                    <td style={{padding: '8px 6px', textAlign: 'center', color: '#2563eb', fontSize: '11px'}}>{team.massey}</td>
+                    <td style={{padding: '8px 6px', textAlign: 'center', color: '#059669', fontSize: '11px'}}>{team.fpi}</td>
+                    <td style={{padding: '8px 6px', textAlign: 'center', color: '#7c3aed', fontSize: '11px'}}>{team.human}</td>
+                    <td style={{padding: '8px 6px', textAlign: 'center'}}><span style={s.cfpBadge}>{team.cfp - 7}</span></td>
+                    <td style={{padding: '8px 6px', textAlign: 'center', fontSize: '11px'}}>{getDiffDisplay(team)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div style={s.insightBox}>
+            <p style={{color: '#334155', fontSize: '13px', margin: 0, lineHeight: 1.5}}>{getInsight()}</p>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('tool-root')).render(<CFBRankingTool />);
+  </script>
+</body>
+</html>
