@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Resume Check · Week 13, 2026 | Bar Graph</title>
-<meta name="description" content="Two college football teams, every rating that matters: resume metrics, Colley, Massey, SP+, FPI, FEI, AP ballots and the Massey Composite, side by side.">
-<meta property="og:title" content="Resume Check · Week 13, 2026 | Bar Graph">
-<meta property="og:description" content="Two college football teams, every rating that matters: resume metrics, Colley, Massey, SP+, FPI, FEI, AP ballots and the Massey Composite, side by side.">
+<title>Resume Check | Bar Graph</title>
+<meta name="description" content="Two FBS teams compared across resume metrics, computer ratings and the polls: Resume SP+, Strength of Record, FEI Resume, Colley, Massey, SP+, FPI, FEI, AP ballots and the Massey Composite.">
+<meta property="og:title" content="Resume Check | Bar Graph">
+<meta property="og:description" content="Two FBS teams compared across resume metrics, computer ratings and the polls: Resume SP+, Strength of Record, FEI Resume, Colley, Massey, SP+, FPI, FEI, AP ballots and the Massey Composite.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bargraphcfb.github.io/resume-check/2026/wk13/">
 <meta property="og:image" content="https://bargraphcfb.github.io/resume-check/2026/wk13/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Resume Check · Week 13, 2026 | Bar Graph">
-<meta name="twitter:description" content="Two college football teams, every rating that matters: resume metrics, Colley, Massey, SP+, FPI, FEI, AP ballots and the Massey Composite, side by side.">
+<meta name="twitter:title" content="Resume Check | Bar Graph">
+<meta name="twitter:description" content="Two FBS teams compared across resume metrics, computer ratings and the polls: Resume SP+, Strength of Record, FEI Resume, Colley, Massey, SP+, FPI, FEI, AP ballots and the Massey Composite.">
 <meta name="twitter:image" content="https://bargraphcfb.github.io/resume-check/2026/wk13/og.png">
 <style>#hint,#dataPanel{display:none} .crumb{margin:0 0 10px;font-size:14px} .crumb a{color:var(--mute);text-decoration:none} .crumb a:hover{color:var(--ink)}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,9 +131,9 @@ body.snip .wrap{max-width:none;padding:12px}
 </head>
 <body>
 <div class="wrap">
-  <p class="crumb"><a href="/">← Bar Graph</a> · Week 13, 2026 (frozen) · <a href="/resume-check/">latest week</a></p>
-  <h1>Resume check: two teams, every lens</h1>
-  <p class="lede">Pick two teams. Each row is one rating; the bar pulls toward whoever ranks better. Snip mode hides everything but the card for a clean screenshot.</p>
+  <p class="crumb"><a href="/">← Bar Graph</a></p>
+  <h1>Resume Check</h1>
+  <p class="lede">Two FBS teams compared across resume metrics, computer ratings and the polls.</p>
   <div class="tabs" role="tablist"><button type="button" role="tab" id="tabRes" aria-selected="true">Resume card</button><button type="button" role="tab" id="tabSch" aria-selected="false">Schedule chart</button></div>
   <div class="controls">
     <select id="selA" aria-label="Team A"></select>
@@ -155,9 +155,9 @@ body.snip .wrap{max-width:none;padding:12px}
   </details>
 
   <section class="notes">
-    <h2>What's in each row</h2>
+    <h2>Sources</h2>
     <table class="stack">
-      <thead><tr><th>Group</th><th>Rating</th><th>What it rewards</th><th>Data as of</th></tr></thead>
+      <thead><tr><th>Group</th><th>Rating</th><th>What it measures</th><th>Source, as of</th></tr></thead>
       <tbody id="srcBody"></tbody>
     </table>
   </section>
@@ -466,18 +466,24 @@ document.getElementById('swap').onclick=()=>{const v=selA.value;selA.value=selB.
 document.getElementById('blind').onclick=()=>{blind=!blind;render()};
 selA.onchange=selB.onchange=render;
 addEventListener('hashchange',()=>{fromHash();render()});
+// source table: last column links to the page each number comes from, with its as-of date
+const L=(k,label,url)=>{const u=url||(SRC[k]&&SRC[k].url);const d=asOf(k);return (u?`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(label)}</a>`:esc(label))+(d?`, ${esc(d)}`:'')};
+const apLabel=SRC.ap&&SRC.ap.label?SRC.ap.label.replace(/^\d{4} NCAA Football Rankings - /,''):'AP Poll';
 const S=[
- ['Resume','Resume SP+','Scoring margin (capped at 50) vs. what an average top-five team would do against the same schedule; −7 per loss','ESPN, '+asOf('sp_plus')],
- ['Resume','Strength of Record','Record vs. the chance an average top-25 team goes that well against the schedule; schedule judged by FPI','ESPN, '+asOf('espn_fpi')],
- ['Resume','FEI Resume (EWD)','Elite win differential: losses an elite team (two SD above average) would expect vs. this schedule, minus actual losses','BCF Toys, '+asOf('fei')],
- ['A win is a win','Colley Matrix','Wins and losses only, adjusted for opponents; no margin, no preseason','colleyrankings.com, '+asOf('colley')],
- ['How you win matters','Massey Ratings','Score-based rating (MAS column of the Massey Composite)',has('massey')?'masseyratings.com, '+asOf('massey'):'Not loaded'],
- ['Who would win tomorrow?','SP+','Tempo- and opponent-adjusted efficiency, points vs. average team','ESPN, '+asOf('sp_plus')],
- ['Who would win tomorrow?','ESPN FPI','ESPN power index, points vs. average team on a neutral field','ESPN, '+asOf('espn_fpi')],
- ['Who would win tomorrow?','FEI','Opponent-adjusted possession efficiency','BCF Toys, '+asOf('fei')],
- ['Histograms','AP ballots / Massey Composite','Spread of individual ballots or computer ranks; dotted line marks the published rank',
-   [ap?`${ap.voters} AP ballots (collegepolltracker, ${asOf('ap_ballots')})`:'AP ballots not loaded',comp?`${SRC.massey.systems} computer systems (Massey, ${asOf('massey')})`:'Massey Composite not loaded',`AP rank and points: ${SRC.ap&&SRC.ap.label?SRC.ap.label.replace(/^\d{4} NCAA Football Rankings - /,''):'-'}`].join('; ')]];
-document.getElementById('srcBody').innerHTML=S.map(r=>'<tr>'+r.map(c=>`<td>${esc(c)}</td>`).join('')+'</tr>').join('');
+ ['Resume','Resume SP+','Scoring margin (capped at 50) vs. what an average top-five team would do against the same schedule; −7 per loss',L('sp_plus','ESPN (Bill Connelly)')],
+ ['Resume','Strength of Record','Record vs. the chance an average top-25 team goes that well against the schedule; schedule judged by FPI',L('espn_fpi','ESPN FPI and SOR')],
+ ['Resume','FEI Resume (EWD)','Elite win differential: losses an elite team (two SD above average) would expect vs. this schedule, minus actual losses',L('fei','BCF Toys (Brian Fremeau)')],
+ ['A win is a win','Colley Matrix','Wins and losses only, adjusted for opponents; no margin, no preseason',L('colley','Colley Matrix')],
+ ['How you win matters','Massey Ratings','Score-based rating',has('massey')?L('massey','Massey Ratings'):'Not loaded'],
+ ['Who would win tomorrow?','SP+','Tempo- and opponent-adjusted efficiency, points vs. average team',L('sp_plus','ESPN (Bill Connelly)')],
+ ['Who would win tomorrow?','ESPN FPI','Points vs. average team on a neutral field',L('espn_fpi','ESPN FPI')],
+ ['Who would win tomorrow?','FEI','Opponent-adjusted possession efficiency',L('fei','BCF Toys (Brian Fremeau)')],
+ ['Header','AP Poll','Rank, points and first-place votes',L('ap',apLabel)],
+ ['Header','CFP rankings','Selection committee rank',has('cfp')?L('cfp','College Football Playoff'):'Not yet released'],
+ ['Histogram','AP ballots','Each voter’s ballot; dotted line marks the published AP rank',ap?L('ap_ballots',`College Poll Tracker (${ap.voters} ballots)`):'Not loaded'],
+ ['Histogram','Massey Composite','Each computer system’s rank; dotted line marks the composite rank',comp?L('massey',`Massey Composite (${SRC.massey.systems} systems)`,SRC.massey.composite_url):'Not loaded'],
+ ['Schedule chart','Scores, opponent SP+','Final scores and site; opponents placed by current SP+ rating',L('schedules','ESPN schedules')]];
+document.getElementById('srcBody').innerHTML=S.map(r=>'<tr>'+r.map((c,i)=>`<td>${i===3?c:esc(c)}</td>`).join('')+'</tr>').join('');
 fromHash();render();
 document.fonts&&document.fonts.ready.then(render);  // re-render once web fonts load so text measurement uses Inter
 }
